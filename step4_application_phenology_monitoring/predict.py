@@ -41,13 +41,10 @@ def predict_dir(dir_path):
     preds = model.predict(dataset)
     #y = preds.max(axis=1).values
     #y = (y > 0.5).float()
-    filenames = np.tile(np.array(dataset.source_files).reshape(-1, 1), (1, preds.shape[1])).reshape(-1)
-    index = np.tile(np.arange(preds.shape[1]).reshape(1, -1), (preds.shape[0], 1)).reshape(-1)
-    df = pd.DataFrame({'file_name': filenames, 'index': index})
-    preds2 = preds.reshape(-1, preds.shape[2])
+    df = pd.DataFrame({'file_name': dataset.source_files})
     for i, label in enumerate(model.c.dataset.label_names):
-        df[label] = preds2[:, i]
-    out_path = '{}/{}.csv'.format(out_dir, site_name)
+        df[label] = preds[:, i]
+    out_path = '{}/{}.csv'.format("step4_application_phenology_monitoring", site_name)
     df.to_csv(out_path, index=False)
 
 dirs = sorted(glob("/media/HDD10TB/cicadasong2023/NE*"))
