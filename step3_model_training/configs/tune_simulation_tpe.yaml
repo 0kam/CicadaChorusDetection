@@ -1,0 +1,105 @@
+# Hyperparameter optimization
+defaults:
+  - override hydra/sweeper: optuna
+  - override hydra/sweeper/sampler: tpe
+# mlflow settings
+mlflow:
+  experiment_name: tune_simulation_tpe
+
+hydra:
+  sweeper:
+    direction: maximize
+    study_name: tune_simulation
+    storage: null
+    n_trials: 100
+    n_jobs: 1
+
+    params:
+      generation.cicada_ratio: choice(0.3, 0.6, 0.9)
+      generation.cicadas.popsize.min: choice(1, 5)
+      generation.cicadas.popsize.max: choice(5, 10, 20, 30)
+      generation.cicadas.distance.min: choice(30, 60, 90)
+      generation.cicadas.distance.max: choice(120, 150, 180)
+      generation.others.weights.birds: choice(0.1, 0.5, 1.0)
+      generation.others.weights.esc50: choice(0.1, 0.5, 1.0)
+      generation.others.weights.insects: choice(0.1, 0.5, 1.0)
+      generation.others.popsize.min: choice(0, 5)
+      generation.others.popsize.max: choice(5, 10, 20, 30)
+      generation.others.distance.min: choice(10, 30, 50, 70)
+      generation.others.distance.max: choice(80, 120, 160)
+
+# General information for model training
+general:
+  batch_size: 8
+  num_workers: 10
+  epochs: 20
+  device: cuda
+  threshold: 0.5
+# Dataset parameters
+dataset:
+  label_names: [aburazemi, higurashi, minminzemi, niiniizemi, tsukutsukuboushi]
+  sr: 16000
+  win_sec: 4
+  stride_sec: 4
+# Feature extraction
+feature:
+  feature: spectrogram # spectrogram, or melspectrogram
+  highpass_cutoff: 600 # Use null for not setting
+  lowpass_cutoff: null # Use null for not setting
+  n_fft: 800
+  n_mels: 256
+# Hyperparameters of the model
+model:
+  model_name: efficientnet_b4
+  n_layers: 1
+  h_dims: 64
+  batch_norm: True
+  drop_out: 0.5
+  learning_rate: 0.0005
+  loss: mse # mse, bce
+
+generation:
+  length: 20 # in seconds
+  n_train: 3000
+  n_test: 500
+  cicada_ratio: 0.75 # Ratio of simulation with cicada songs
+  train_dir: /home/okamoto/CicadaChorusDetection/step3_model_training/data/train
+  test_dir: /home/okamoto/CicadaChorusDetection/step3_model_training/data/test
+  
+  cicadas:
+    weights: # weights of each cicada species
+      aburazemi: 1
+      higurashi: 1
+      minminzemi: 1
+      niiniizemi: 1
+      tsukutsukuboushi: 1
+    popsize:
+      min: 1 # minimum number of cicadas
+      max: 30 # maximum number of cicadas
+    distance:
+      min: 10.0 # minimum distance between the mic and cicadas in meters.
+      max: 60.0 # maximum distance between the mic and cicadas in meters.
+    n_species:
+      min: 1 # minimum number of cicada species
+      max: 5 # maximum number of cicada species
+
+  others:
+    weights:
+      birds: 1
+      esc50: 1
+      insects: 1
+    popsize:
+      min: 0
+      max: 20
+    distance:
+      min: 20.0
+      max: 120.0
+    n_species:
+      min: 1
+      max: 3
+  # Augumentation settings
+  augs:
+    pitch_shift:
+      null # null for not using
+      #min: -1
+      #max: 1

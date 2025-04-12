@@ -1,0 +1,1 @@
+cd step3_model_training && mlflow ui --port 5001

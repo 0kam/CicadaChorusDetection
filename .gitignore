@@ -1,0 +1,10 @@
+.venv
+whombat
+__pycache__/
+multirun
+outputs
+step3_model_training/mlruns
+step3_model_training/data
+step2_prepare_training_sources/data
+step1_real_annotation/cicadas_in_nies
+step1_real_annotation/recordings
