@@ -247,13 +247,16 @@ class CNNClassifier:
         res = self.classification_scores(torch.cat(y_trues), torch.cat(y_preds))
         return res
     
-    def predict(self, dataset: AudioPredictionDataset):
+    def predict(self, dataset: AudioPredictionDataset, transforms=None):
         """
         Make predictions on the dataset
         Parameters:
         -----------
         dataset: AudioPredictionDataset
             Dataset to predict
+        transforms: torch.nn.Module
+            Transforms to apply to the audio
+            If None, use the transforms defined in the class
         
         Returns:
         --------
@@ -265,7 +268,11 @@ class CNNClassifier:
             num_workers=self.c.general.num_workers, shuffle=False)
         predictions = []
         for audio in tqdm(loader):
-            x = audio.reshape(-1, 1, audio.shape[2])
+            if transforms is not None:
+                x = transforms(audio)
+            else:
+                x = audio
+            x = x.reshape(-1, 1, x.shape[2])
             if self.c.feature.highpass_cutoff is not None:
                 x = highpass_biquad(x, self.c.dataset.sr, self.c.feature.highpass_cutoff)
             if self.c.feature.lowpass_cutoff is not None:
@@ -277,8 +284,8 @@ class CNNClassifier:
                 y = self.model(x)
             
             predictions.append(y.detach().cpu())
-
-        return torch.stack(predictions).detach().cpu()
+        
+        return torch.stack([preds.max(0).values for preds in predictions])
 
     def build_transforms(self):
         """

@@ -3,13 +3,11 @@ import sys
 sys.path.append("/home/okamoto/CicadaChorusDetection/scripts")
 from utils.data import AudioPredictionDataset
 from cnn import CNNClassifier
-
+from torchaudio.transforms import Vol
 import mlflow
 import omegaconf
 import pandas as pd
-import numpy as np
 from pathlib import Path
-import os
 import yaml
 from glob import glob
 
@@ -35,10 +33,13 @@ def predict_dir(dir_path):
         sr = 16000
     )
 
+    transform = Vol(15, "db")
+
     site_name = Path(dir_path).name
     print("processing {} ...".format(site_name))
     # Prediction
-    preds = model.predict(dataset)
+    cfg.general.num_workers = 20
+    preds = model.predict(dataset, transforms=transform)
     #y = preds.max(axis=1).values
     #y = (y > 0.5).float()
     df = pd.DataFrame({'file_name': dataset.source_files})
@@ -47,8 +48,5 @@ def predict_dir(dir_path):
     out_path = '{}/{}.csv'.format("step4_application_phenology_monitoring", site_name)
     df.to_csv(out_path, index=False)
 
-dirs = sorted(glob("/media/HDD10TB/cicadasong2023/NE*"))
-for target_dir in dirs:
-    predict_dir(target_dir + "/cicadasong2023/NE*")
-for target_dir in dirs:
-    predict_dir(target_dir + "/")
+
+predict_dir(dir_path)

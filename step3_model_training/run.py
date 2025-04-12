@@ -15,7 +15,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 from torchaudio.transforms import Vol
 
-# cfg = OmegaConf.load('/home/okamoto/CicadaChorusDetection/step3_model_training/configs/tune_model.yaml')
+# cfg = OmegaConf.load('/home/okamoto/CicadaChorusDetection/step3_model_training/configs/final_run.yaml')
 
 if __name__ == "__main__":
 
