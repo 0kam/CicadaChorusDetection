@@ -75,4 +75,4 @@ plot_spiral <- function(csv_path, th) {
 }
 
 csv_path <- "Akitsu.csv"
-plot_spiral(csv_path, th = 0.75)
+plot_spiral(csv_path, th = 0.9)
