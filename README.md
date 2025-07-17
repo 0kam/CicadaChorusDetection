@@ -1,6 +1,6 @@
 # CicadaChorusDetection
 
-This repository contains the source code for the paper "Simulation-based approach for enhancing automatic detection of cicada songs in challenging chorus conditions."
+This repository contains the source code for the paper "Simulation-based approach for enhancing automatic detection of cicada songs in challenging chorus conditions" (https://doi.org/10.1016/j.ecoinf.2025.103299).
 
 ## Overview
 
@@ -63,4 +63,13 @@ Python and package versions are managed using [uv](https://github.com/astral-sh/
 ```
 
 ## Citation
-*Preparing!*
+```
+Ryotaro Okamoto, Hiroyuki Oguma,
+A simulation based approach for enhancing automatic detection of cicada songs in challenging chorus conditions,
+Ecological Informatics,
+Volume 90,
+2025,
+103299,
+ISSN 1574-9541,
+https://doi.org/10.1016/j.ecoinf.2025.103299.
+```
