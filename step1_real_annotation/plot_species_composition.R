@@ -4,9 +4,9 @@ library(ggupset)
 
 df <- bind_rows(
   read_csv("tune_dataset.csv") %>%
-    mutate(dataset = "Tune Dataset"),
+    mutate(dataset = "Tuning Dataset"),
   read_csv("test_dataset.csv") %>%
-    mutate(dataset = "Test Dataset")
+    mutate(dataset = "Testing Dataset")
   ) %>%
   rename(
     "Large Brown Cicada" = aburazemi,
