@@ -1,0 +1,15 @@
+artifact_uri: file:///home/okamoto/CicadaChorusDetection/step3_model_training/mlruns/718625123847515763/7301479f59624b70a674ac538ea4851c/artifacts
+end_time: 1741756401512
+entry_point_name: ''
+experiment_id: '718625123847515763'
+lifecycle_stage: active
+run_id: 7301479f59624b70a674ac538ea4851c
+run_name: '20250312131455'
+run_uuid: 7301479f59624b70a674ac538ea4851c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741752895243
+status: 3
+tags: []
+user_id: okamoto

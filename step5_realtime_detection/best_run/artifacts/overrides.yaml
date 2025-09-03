@@ -1,0 +1,12 @@
+- generation.cicada_ratio=0.9
+- generation.cicadas.popsize.min=5
+- generation.cicadas.popsize.max=5
+- generation.cicadas.distance.min=60
+- generation.cicadas.distance.max=120
+- generation.others.weights.birds=0.1
+- generation.others.weights.esc50=0.1
+- generation.others.weights.insects=0.1
+- generation.others.popsize.min=0
+- generation.others.popsize.max=5
+- generation.others.distance.min=10
+- generation.others.distance.max=120
